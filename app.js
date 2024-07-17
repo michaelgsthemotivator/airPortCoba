@@ -17,3 +17,5 @@ if (command === "help") {
   //   console.log(args[0]);
   FlightInfo(args[0]);
 }
+
+// commit practice add comment
