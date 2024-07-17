@@ -13,14 +13,15 @@ const PlaneList = async () => {
 const PassengerList = async () => {
   //   console.log("tearlament");
   const data = await ReadPassengers();
-  //   console.log(data, "halsdfa;dlsfkj");
+  // console.log(data, "halsdfa;dlsfkj");
   ViewPassengerList(data);
 };
 
 const FlightInfo = async (number) => {
   //   console.log(number, "asdfa");
   const data = await FindFlight(number);
-  console.log(data);
+  // console.log(data);
+  console.dir(data, { depth: 3 });
 };
 
 module.exports = { Help, PlaneList, PassengerList, FlightInfo };

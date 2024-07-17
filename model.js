@@ -1,3 +1,4 @@
+const { Console } = require("console");
 const { Factory } = require("./class");
 
 const fs = require("fs").promises;
@@ -39,33 +40,26 @@ const ReadPassengers = async () => {
 
 const FindFlight = async (number) => {
   try {
-    const number1 = +number;
-    const data = JSON.parse(await fs.readFile("./plane.json", "utf-8"));
-    const data1 = data
-      .filter((el) => {
-        return el.flightNumber === number1;
-      })
-      .map(async (el) => {
-        try {
-          const data = JSON.parse(
-            await fs.readFile("./passanger.json", "utf-8")
-          );
+    // console.log(number);
+    const data = JSON.parse(await fs.readFile("./plane.json", "utf-8")).filter(
+      (f) => f.flightNumber === +number
+    );
+    // console.log(data);
+    const airlineNameToFind = data[0].airlineName;
+    // console.log(airlineNameToFind);
 
-          const data1 = data.filter((f) => {
-            return el.airlineName === f.ticket.airlineName;
-          });
+    const passangerData = JSON.parse(
+      await fs.readFile("./passanger.json", "utf-8")
+    ).filter((f) => f.ticket.airlineName === airlineNameToFind);
+    // console.log(passangerData);
 
-          return {
-            flightNumber: el.flightNumber,
-            airlineName: el.airlineName,
-            origin: el.origin,
-            destination: el.destination,
-            passengers: [data1],
-          };
-        } catch (error) {
-          console.log(error, "error finding passanger");
-        }
-      });
+    return {
+      flightNumber: data[0].flightNumber,
+      airlineName: data[0].airlineName,
+      origin: data[0].origin,
+      destination: data[0].destination,
+      passenger: [passangerData],
+    };
   } catch (error) {
     console.log(error, "error finding flight");
   }
